@@ -112,7 +112,7 @@ where
     let len = r.read_u32::<BigEndian>()? as usize;
     let mut vec = Vec::<Value>::new();
 
-    for i in 0..len {
+    for _ in 0..len {
         vec.push(from_bytes(r)?);
     }
     
