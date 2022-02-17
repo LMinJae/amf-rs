@@ -1,3 +1,7 @@
+use std::collections::HashMap;
+
+pub mod decoder;
+
 // 2.1 Types Overview
 mod marker {
     pub const NUMBER: u8 = 0x00;
@@ -18,4 +22,34 @@ mod marker {
     pub const XML_DOCUMENT: u8 = 0x0F;
     pub const TYPED_OBJECT: u8 = 0x10;
     pub const AVMPLUS_OBJECT: u8 = 0x11;
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub enum Value {
+    #[cfg(feature = "amf0-number")]
+    Number(f64),
+    #[cfg(feature = "amf0-boolean")]
+    Boolean(bool),
+    #[cfg(feature = "amf0-string")]
+    String(String),
+    #[cfg(feature = "amf0-object")]
+    Object {
+        class_name: String,
+        property: HashMap<String, crate::amf0::Value>,
+    },
+    Null,
+    Undefined,
+    #[cfg(feature = "amf0-reference")]
+    Reference(u16),
+    #[cfg(feature = "amf0-ecma_array")]
+    ECMAArray(HashMap<String, crate::amf0::Value>),
+    #[cfg(feature = "amf0-object")]
+    ObjectEnd,
+    #[cfg(feature = "amf0-strict_array")]
+    StrictArray(Vec<crate::amf0::Value>),
+    #[cfg(feature = "amf0-date")]
+    Date(f64), // time-zone is reserved, not supported, should be set to 0x0000
+    Unsupported,
+    #[cfg(feature = "amf0-xml_document")]
+    XMLDocument(String),
 }

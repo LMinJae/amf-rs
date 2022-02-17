@@ -6,3 +6,37 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+byteorder = "1.4.3"
+
+[features]
+default = [
+    "amf0",
+]
+
+amf0 = [
+    "amf0-number",
+    "amf0-boolean",
+    "amf0-string",
+    "amf0-object",
+    "amf0-reference",
+    "amf0-ecma_array",
+    "amf0-strict_array",
+    "amf0-date",
+    "amf0-xml_document",
+]
+amf0-number = []
+amf0-boolean = []
+amf0-string = []
+amf0-object = []
+amf0-reference = []
+amf0-ecma_array = []
+amf0-strict_array = []
+amf0-date = []
+amf0-xml_document = []
+
+rtmp = [
+    "amf0-number",
+    "amf0-boolean",
+    "amf0-string",
+    "amf0-object",
+]
