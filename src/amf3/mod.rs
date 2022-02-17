@@ -28,4 +28,6 @@ pub enum Value {
     Null,
     False,
     True,
+    Integer(i32),
+    Double(f64),
 }
