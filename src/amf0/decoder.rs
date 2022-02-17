@@ -36,6 +36,8 @@ where
         marker::XML_DOCUMENT    => parse_xml_document(r),
         #[cfg(feature = "amf0-object")]
         marker::TYPED_OBJECT    => parse_typed_object(r),
+        #[cfg(feature = "amf0-avmplus")]
+        marker::AVMPLUS_OBJECT  => parse_avmplus_obejct(r),
         _ => Ok(Value::Unsupported)
     }
 }
@@ -177,6 +179,14 @@ where
         },
         _ => Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8"))
     }
+}
+
+#[cfg(feature = "amf0-avmplus")]
+fn parse_avmplus_obejct<R>(_r: &mut R) -> Result<Value, Error>
+where
+    R: Read,
+{
+    unimplemented!()
 }
 
 #[cfg(any(feature = "amf0-object", feature = "amf0-ecma_array"))]

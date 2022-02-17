@@ -1,5 +1,8 @@
 use std::collections::HashMap;
 
+#[cfg(feature = "amf0-avmplus")]
+use crate::amf3;
+
 pub mod decoder;
 
 // 2.1 Types Overview
@@ -52,4 +55,6 @@ pub enum Value {
     Unsupported,
     #[cfg(feature = "amf0-xml_document")]
     XMLDocument(String),
+    #[cfg(feature = "amf0-avmplus")]
+    AVMPlus(amf3::Value),
 }
