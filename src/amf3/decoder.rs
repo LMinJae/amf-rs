@@ -13,12 +13,15 @@ where
         marker::NULL => Ok(Value::Null),
         marker::FALSE => Ok(Value::False),
         marker::TRUE => Ok(Value::True),
+        #[cfg(feature = "amf3-integer")]
         marker::INTEGER => parse_integer(r),
+        #[cfg(feature = "amf3-double")]
         marker::DOUBLE => parse_double(r),
         _ => Err(Error::new(ErrorKind::Other, "Unsupported marker")),
     }
 }
 
+#[cfg(feature = "amf3-integer")]
 fn parse_integer<R>(r: &mut R) -> Result<Value, Error>
 where
     R: Read,
@@ -33,6 +36,7 @@ where
     Ok(Value::Integer(i))
 }
 
+#[cfg(feature = "amf3-double")]
 fn parse_double<R>(r: &mut R) -> Result<Value, Error>
 where
     R: Read,
