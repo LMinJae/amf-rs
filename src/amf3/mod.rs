@@ -32,4 +32,6 @@ pub enum Value {
     Integer(i32),
     #[cfg(feature = "amf3-double")]
     Double(f64),
+    #[cfg(feature = "amf3-array")]
+    Array(Vec<crate::amf3::Value>),
 }
