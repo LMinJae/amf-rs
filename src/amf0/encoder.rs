@@ -76,8 +76,8 @@ where
         #[cfg(feature = "amf0-date")]
         Value::Date(d) => {
             w.write_u8(marker::DATE)?;
-            w.write_f64::<BigEndian>(d.millis)?;
-            w.write_u16::<BigEndian>(d.timezone)
+            w.write_f64::<BigEndian>(*d)?;
+            w.write_u16::<BigEndian>(0)
         }
         #[cfg(feature = "amf0-xml_document")]
         Value::XMLDocument(xml) => {

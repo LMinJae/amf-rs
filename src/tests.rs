@@ -102,10 +102,10 @@ mod tests {
 
     #[test]
     fn amf0_date() {
-        amf0_test!(amf0::Value::Date(crate::Date::new(1_590_796_800_000_f64)));
-        amf0_test!(amf0::Value::Date(crate::Date::new(1_045_112_400_000_f64)));
-        amf0_test!(amf0::Value::Date(crate::Date::new(-1.0)));
-        amf0_test!(amf0::Value::Date(crate::Date::new(f64::INFINITY)));
+        amf0_test!(amf0::Value::Date(1_590_796_800_000_f64));
+        amf0_test!(amf0::Value::Date(1_045_112_400_000_f64));
+        amf0_test!(amf0::Value::Date(-1.0));
+        amf0_test!(amf0::Value::Date(f64::INFINITY));
     }
 
     #[test]

@@ -43,7 +43,7 @@ pub enum Value {
     #[cfg(feature = "amf0-strict_array")]
     StrictArray(crate::Array<crate::amf0::Value>),
     #[cfg(feature = "amf0-date")]
-    Date(crate::Date), // time-zone is reserved, not supported, should be set to 0x0000
+    Date(crate::Double), // time-zone is reserved, not supported, should be set to 0x0000
     Unsupported,
     #[cfg(feature = "amf0-xml_document")]
     XMLDocument(crate::String),

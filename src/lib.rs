@@ -21,16 +21,3 @@ pub struct Object<T> {
     property: Property<T>,
 }
 pub type Array<T> = Vec<T>;
-#[derive(Debug, PartialEq, Clone)]
-pub struct Date {
-    millis: f64,
-    timezone: u16,
-}
-impl Date {
-    pub fn new(millis: f64) -> Self {
-        Date {
-            millis,
-            timezone: 0,
-        }
-    }
-}

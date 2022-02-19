@@ -37,7 +37,7 @@ pub enum Value {
     #[cfg(feature = "amf3-xml_doc")]
     XMLDocument(crate::String),
     #[cfg(feature = "amf3-date")]
-    Date(crate::Date),
+    Date(crate::Double),
     #[cfg(feature = "amf3-array")]
     Array(crate::Array<crate::amf3::Value>),
     #[cfg(feature = "amf3-object")]

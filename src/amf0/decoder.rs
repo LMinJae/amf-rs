@@ -129,10 +129,9 @@ fn parse_date<R>(r: &mut R) -> Result<Value, Error>
 where
     R: Read,
 {
-    Ok(Value::Date(crate::Date {
-        millis: r.read_f64::<BigEndian>()?,
-        timezone: r.read_u16::<BigEndian>()?,
-    }))
+    let millis = r.read_f64::<BigEndian>()?;
+    r.read_u16::<BigEndian>()?;
+    Ok(Value::Date(millis))
 }
 
 #[cfg(feature = "amf0-string")]
