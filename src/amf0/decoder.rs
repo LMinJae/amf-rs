@@ -1,6 +1,6 @@
-use std::io::{Error, ErrorKind, Read};
-use std::collections::HashMap;
 use byteorder::{BigEndian, ReadBytesExt};
+use std::collections::HashMap;
+use std::io::{Error, ErrorKind, Read};
 
 use super::{marker, Value};
 
@@ -11,34 +11,34 @@ where
     let marker = r.read_u8()?;
     match marker {
         #[cfg(feature = "amf0-number")]
-        marker::NUMBER          => parse_number(r),
+        marker::NUMBER => parse_number(r),
         #[cfg(feature = "amf0-boolean")]
-        marker::BOOLEAN         => parse_boolean(r),
+        marker::BOOLEAN => parse_boolean(r),
         #[cfg(feature = "amf0-string")]
-        marker::STRING          => parse_string(r),
+        marker::STRING => parse_string(r),
         #[cfg(feature = "amf0-object")]
-        marker::OBJECT          => parse_object(r),
-        marker::NULL            => Ok(Value::Null),
-        marker::UNDEFINED       => Ok(Value::Undefined),
+        marker::OBJECT => parse_object(r),
+        marker::NULL => Ok(Value::Null),
+        marker::UNDEFINED => Ok(Value::Undefined),
         #[cfg(feature = "amf0-reference")]
-        marker::REFERENCE       => parse_reference(r),
+        marker::REFERENCE => parse_reference(r),
         #[cfg(feature = "amf0-ecma_array")]
-        marker::ECMA_ARRAY      => parse_ecma_array(r),
+        marker::ECMA_ARRAY => parse_ecma_array(r),
         #[cfg(feature = "amf0-object")]
-        marker::OBJECT_END       => Ok(Value::ObjectEnd),
+        marker::OBJECT_END => Ok(Value::ObjectEnd),
         #[cfg(feature = "amf0-strict_array")]
-        marker::STRICT_ARRAY    => parse_strict_array(r),
+        marker::STRICT_ARRAY => parse_strict_array(r),
         #[cfg(feature = "amf0-date")]
-        marker::DATE            => parse_date(r),
+        marker::DATE => parse_date(r),
         #[cfg(feature = "amf0-string")]
-        marker::LONG_STRING     => parse_long_string(r),
+        marker::LONG_STRING => parse_long_string(r),
         #[cfg(feature = "amf0-xml_document")]
-        marker::XML_DOCUMENT    => parse_xml_document(r),
+        marker::XML_DOCUMENT => parse_xml_document(r),
         #[cfg(feature = "amf0-object")]
-        marker::TYPED_OBJECT    => parse_typed_object(r),
+        marker::TYPED_OBJECT => parse_typed_object(r),
         #[cfg(feature = "amf0-avmplus")]
-        marker::AVMPLUS_OBJECT  => parse_avmplus_obejct(r),
-        _ => Ok(Value::Unsupported)
+        marker::AVMPLUS_OBJECT => parse_avmplus_obejct(r),
+        _ => Ok(Value::Unsupported),
     }
 }
 
@@ -179,8 +179,8 @@ where
     match String::from_utf8(buf) {
         Ok(class_name) => match parse_object_property(r) {
             Ok(property) => Ok(Value::Object(crate::Object {
-                class_name: class_name,
-                property: property,
+                class_name,
+                property,
             })),
             Err(e) => Err(e),
         },

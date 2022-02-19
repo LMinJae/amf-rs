@@ -1,3 +1,4 @@
+pub mod amf0;
 pub mod amf3;
 
 #[cfg(test)]
