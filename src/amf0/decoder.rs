@@ -64,7 +64,7 @@ where
     R: Read,
 {
     let len = r.read_u16::<BigEndian>()? as usize;
-    
+
     let mut buf = vec![0; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
