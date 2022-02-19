@@ -65,7 +65,7 @@ where
 {
     let len = r.read_u16::<BigEndian>()? as usize;
 
-    let mut buf = vec![0; len];
+    let mut buf = vec![0_u8; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
         return Ok(Value::String(utf8));
@@ -141,7 +141,7 @@ where
 {
     let len = r.read_u32::<BigEndian>()? as usize;
 
-    let mut buf = vec![0; len];
+    let mut buf = vec![0_u8; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
         return Ok(Value::String(utf8));
@@ -157,7 +157,7 @@ where
 {
     let len = r.read_u32::<BigEndian>()? as usize;
 
-    let mut buf = vec![0; len];
+    let mut buf = vec![0_u8; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
         return Ok(Value::XMLDocument(utf8));
@@ -173,7 +173,7 @@ where
 {
     let len = r.read_u16::<BigEndian>()? as usize;
 
-    let mut buf = vec![0; len];
+    let mut buf = vec![0_u8; len];
     r.read_exact(&mut buf)?;
     match String::from_utf8(buf) {
         Ok(class_name) => match parse_object_property(r) {
@@ -206,7 +206,7 @@ where
         let key = if 0 == len {
             "".to_string()
         } else {
-            let mut buf = vec![0; len];
+            let mut buf = vec![0_u8; len];
             r.read_exact(&mut buf)?;
             match String::from_utf8(buf) {
                 Ok(utf8) => utf8,
