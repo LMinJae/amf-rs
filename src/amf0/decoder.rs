@@ -68,7 +68,7 @@ where
     let mut buf = vec![0; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
-        return Ok(Value::String(utf8))
+        return Ok(Value::String(utf8));
     }
 
     Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8"))
@@ -80,7 +80,10 @@ where
     R: Read,
 {
     match parse_object_property(r) {
-        Ok(property) => Ok(Value::Object { class_name: "".to_string(), property: property}),
+        Ok(property) => Ok(Value::Object(crate::Object {
+            class_name: "".to_string(),
+            property,
+        })),
         Err(e) => Err(e),
     }
 }
@@ -117,7 +120,7 @@ where
     for _ in 0..len {
         vec.push(from_bytes(r)?);
     }
-    
+
     Ok(Value::StrictArray(vec))
 }
 
@@ -126,7 +129,10 @@ fn parse_date<R>(r: &mut R) -> Result<Value, Error>
 where
     R: Read,
 {
-    Ok(Value::Date(r.read_f64::<BigEndian>()?))
+    Ok(Value::Date(crate::Date {
+        millis: r.read_f64::<BigEndian>()?,
+        timezone: r.read_u16::<BigEndian>()?,
+    }))
 }
 
 #[cfg(feature = "amf0-string")]
@@ -135,11 +141,11 @@ where
     R: Read,
 {
     let len = r.read_u32::<BigEndian>()? as usize;
-    
+
     let mut buf = vec![0; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
-        return Ok(Value::String(utf8))
+        return Ok(Value::String(utf8));
     }
 
     Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8"))
@@ -151,11 +157,11 @@ where
     R: Read,
 {
     let len = r.read_u32::<BigEndian>()? as usize;
-    
+
     let mut buf = vec![0; len];
     r.read_exact(&mut buf)?;
     if let Ok(utf8) = String::from_utf8(buf) {
-        return Ok(Value::XMLDocument(utf8))
+        return Ok(Value::XMLDocument(utf8));
     }
 
     Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8"))
@@ -167,17 +173,18 @@ where
     R: Read,
 {
     let len = r.read_u16::<BigEndian>()? as usize;
-    
+
     let mut buf = vec![0; len];
     r.read_exact(&mut buf)?;
     match String::from_utf8(buf) {
-        Ok(class_name) => {
-            match parse_object_property(r) {
-                Ok(property) => Ok(Value::Object { class_name: class_name, property: property}),
-                Err(e) => Err(e),
-            }
+        Ok(class_name) => match parse_object_property(r) {
+            Ok(property) => Ok(Value::Object(crate::Object {
+                class_name: class_name,
+                property: property,
+            })),
+            Err(e) => Err(e),
         },
-        _ => Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8"))
+        _ => Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8")),
     }
 }
 
@@ -204,14 +211,14 @@ where
             r.read_exact(&mut buf)?;
             match String::from_utf8(buf) {
                 Ok(utf8) => utf8,
-                _ => return Err(Error::new(ErrorKind::Other, "Failed to parsing value"))
+                _ => return Err(Error::new(ErrorKind::Other, "Failed to parsing value")),
             }
         };
 
         match from_bytes(r) {
             Ok(Value::ObjectEnd) => return Ok(property),
             Ok(value) => property.insert(key, value),
-            _ => return Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8"))
+            _ => return Err(Error::new(ErrorKind::Other, "Failed to parsing UTF-8")),
         };
     }
 }

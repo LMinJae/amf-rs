@@ -30,31 +30,27 @@ mod marker {
 #[derive(Debug, PartialEq, Clone)]
 pub enum Value {
     #[cfg(feature = "amf0-number")]
-    Number(f64),
+    Number(crate::Double),
     #[cfg(feature = "amf0-boolean")]
-    Boolean(bool),
+    Boolean(crate::Boolean),
     #[cfg(feature = "amf0-string")]
-    String(String),
+    String(crate::String),
     #[cfg(feature = "amf0-object")]
-    Object {
-        class_name: String,
-        property: HashMap<String, crate::amf0::Value>,
-    },
+    Object(crate::Object<crate::amf0::Value>),
     Null,
     Undefined,
     #[cfg(feature = "amf0-reference")]
     Reference(u16),
     #[cfg(feature = "amf0-ecma_array")]
-    ECMAArray(HashMap<String, crate::amf0::Value>),
-    #[cfg(feature = "amf0-object")]
+    ECMAArray(crate::Property<crate::amf0::Value>),
     ObjectEnd,
     #[cfg(feature = "amf0-strict_array")]
-    StrictArray(Vec<crate::amf0::Value>),
+    StrictArray(crate::Array<crate::amf0::Value>),
     #[cfg(feature = "amf0-date")]
-    Date(f64), // time-zone is reserved, not supported, should be set to 0x0000
+    Date(crate::Date), // time-zone is reserved, not supported, should be set to 0x0000
     Unsupported,
     #[cfg(feature = "amf0-xml_document")]
-    XMLDocument(String),
+    XMLDocument(crate::String),
     #[cfg(feature = "amf0-avmplus")]
-    AVMPlus(amf3::Value),
+    AVMPlus(crate::amf3::Value),
 }

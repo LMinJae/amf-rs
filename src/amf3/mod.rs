@@ -29,9 +29,31 @@ pub enum Value {
     False,
     True,
     #[cfg(feature = "amf3-integer")]
-    Integer(i32),
+    Integer(crate::Integer),
     #[cfg(feature = "amf3-double")]
-    Double(f64),
+    Double(crate::Double),
+    #[cfg(feature = "amf3-string")]
+    String(crate::String),
+    #[cfg(feature = "amf3-xml_doc")]
+    XMLDocument(crate::String),
+    #[cfg(feature = "amf3-date")]
+    Date(crate::Date),
     #[cfg(feature = "amf3-array")]
-    Array(Vec<crate::amf3::Value>),
+    Array(crate::Array<crate::amf3::Value>),
+    #[cfg(feature = "amf3-object")]
+    Object(crate::Object<crate::amf3::Value>),
+    #[cfg(feature = "amf3-xml")]
+    XML(crate::String),
+    #[cfg(feature = "amf3-byte_array")]
+    ByteArray(crate::Array<u8>),
+    #[cfg(feature = "amf3-vector_int")]
+    VectorInt(crate::Array<crate::Integer>),
+    #[cfg(feature = "amf3-vector_uint")]
+    VectorUInt(crate::Array<crate::Integer>),
+    #[cfg(feature = "amf3-vector_double")]
+    VectorDouble(crate::Array<crate::Double>),
+    #[cfg(feature = "amf3-vector_object")]
+    VectorObject(crate::Array<crate::Object<crate::amf3::Value>>),
+    #[cfg(feature = "amf3-dictionary")]
+    Dictionary(crate::Property<crate::amf3::Value>),
 }
