@@ -4,6 +4,7 @@ use std::collections::HashMap;
 use crate::amf3;
 
 pub mod decoder;
+pub mod encoder;
 
 // 2.1 Types Overview
 mod marker {

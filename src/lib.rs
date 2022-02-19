@@ -1,5 +1,7 @@
 pub mod amf3;
-pub mod amf0;
+
+#[cfg(test)]
+mod tests;
 
 #[derive(Debug)]
 pub enum Value {
