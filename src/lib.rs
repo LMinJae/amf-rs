@@ -1,12 +1,10 @@
 pub mod amf0;
-pub mod amf3;
 
 #[cfg(test)]
 mod tests;
 
 #[derive(Debug)]
 pub enum Value {
-    Amf3Value(amf3::Value),
     Amf0Value(amf0::Value),
 }
 

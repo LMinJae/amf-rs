@@ -20,7 +20,7 @@ mod marker {
     pub const _RECORDSET: u8 = 0x0E; // reserved, not supported
     pub const XML_DOCUMENT: u8 = 0x0F;
     pub const TYPED_OBJECT: u8 = 0x10;
-    pub const AVMPLUS_OBJECT: u8 = 0x11;
+    pub const _AVMPLUS_OBJECT: u8 = 0x11;
 }
 
 #[derive(Debug, PartialEq, Clone)]
@@ -48,5 +48,5 @@ pub enum Value {
     #[cfg(feature = "amf0-xml_document")]
     XMLDocument(crate::String),
     #[cfg(feature = "amf0-avmplus")]
-    AVMPlus(crate::amf3::Value),
+    AVMPlus,
 }

@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::{amf0, amf3};
+    use crate::{amf0};
 
     use std::collections::HashMap;
 
